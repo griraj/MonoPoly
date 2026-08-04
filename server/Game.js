@@ -697,7 +697,7 @@ export class Game {
     if (!accept) {
       trade.status = 'rejected';
       this.pushLog(`${this.getPlayer(playerId).name} rejected the trade.`);
-      return;
+      return { accepted: false, message: `${this.getPlayer(playerId).name} rejected the trade.` };
     }
     const from = this.getPlayer(trade.fromId);
     const to = this.getPlayer(trade.toId);
@@ -728,7 +728,9 @@ export class Game {
     from.getOutOfJailCards += offer.toJailCards || 0;
 
     trade.status = 'accepted';
-    this.pushLog(`Trade between ${from.name} and ${to.name} was accepted.`);
+    const message = `Trade between ${from.name} and ${to.name} was accepted.`;
+    this.pushLog(message);
+    return { accepted: true, message };
   }
 
   cancelTrade(tradeId, playerId) {
