@@ -4,6 +4,7 @@ import Home from './components/Home.jsx';
 import LobbyRoom from './components/LobbyRoom.jsx';
 import GameScreen from './components/GameScreen.jsx';
 import Toast from './components/Toast.jsx';
+import TradeAcceptedToast from './components/TradeAcceptedToast.jsx';
 
 export default function App() {
   const { session, game, connected, tryRejoin } = useStore();
@@ -33,6 +34,7 @@ export default function App() {
     <div className="min-h-screen felt-texture bg-felt-950">
       {screen}
       <Toast />
+      <TradeAcceptedToast />
     </div>
   );
 }

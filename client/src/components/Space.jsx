@@ -10,7 +10,7 @@ const ICONS = {
   go: '➡️',
 };
 
-export default function Space({ space, propState, players, onClick, isCorner }) {
+export default function Space({ space, propState, players, onClick, onSelectPlayer, isCorner }) {
   const owner = propState?.owner ? players.find((p) => p.id === propState.owner) : null;
   const occupants = players.filter((p) => !p.bankrupt && p.position === space.id);
   const isProperty = space.type === 'property';
@@ -74,12 +74,19 @@ export default function Space({ space, propState, players, onClick, isCorner }) 
       {occupants.length > 0 && (
         <div className="absolute bottom-0.5 left-0.5 flex -space-x-1">
           {occupants.map((p) => (
-            <span
+            <button
               key={p.id}
-              className="w-2.5 h-2.5 rounded-full ring-1 ring-white/60 shadow"
-              style={{ background: PLAYER_COLOR_HEX[p.color] }}
-              title={p.name}
-            />
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onSelectPlayer?.(p.id);
+              }}
+              title={`View ${p.name}'s properties`}
+              className="flex items-center justify-center w-5 h-5 rounded-full ring-1 ring-white/60 shadow-lg text-[10px] font-bold"
+              style={{ background: PLAYER_COLOR_HEX[p.color], color: '#111' }}
+            >
+              ♟
+            </button>
           ))}
         </div>
       )}

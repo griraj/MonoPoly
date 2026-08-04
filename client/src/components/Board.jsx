@@ -1,7 +1,7 @@
 import { gridPosition } from '../lib/boardLayout.js';
 import Space from './Space.jsx';
 
-export default function Board({ game, onSelectSpace, centerContent }) {
+export default function Board({ game, onSelectSpace, onSelectPlayer, centerContent }) {
   const corners = new Set([0, 10, 20, 30]);
   return (
     <div
@@ -21,6 +21,7 @@ export default function Board({ game, onSelectSpace, centerContent }) {
               players={game.players}
               isCorner={corners.has(space.id)}
               onClick={() => onSelectSpace(space.id)}
+              onSelectPlayer={onSelectPlayer}
             />
           </div>
         );
