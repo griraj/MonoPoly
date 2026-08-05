@@ -31,7 +31,7 @@ export default function PropertyModal({ game, spaceId, onClose }) {
         <div className="p-5">
           <div className="flex items-start justify-between mb-1">
             <h2 className="font-display text-xl font-bold">{space.name}</h2>
-            <button onClick={onClose} className="text-ink-900/40 hover:text-ink-900 text-lg leading-none">
+            <button onClick={onClose} className="text-ink-900/70 hover:text-ink-900 text-lg leading-none">
               ✕
             </button>
           </div>
@@ -56,7 +56,7 @@ export default function PropertyModal({ game, spaceId, onClose }) {
                     }`}
                   >
                     <td className="py-1">{RENT_LABELS[i]}</td>
-                    <td className="py-1 text-right font-mono-num">Rs {r}</td>
+                    <td className="py-1 text-right font-mono-num">${r}</td>
                   </tr>
                 ))}
               </tbody>
@@ -64,9 +64,9 @@ export default function PropertyModal({ game, spaceId, onClose }) {
           )}
 
           <div className="flex flex-wrap gap-2 text-xs text-ink-700 mb-4">
-            {space.price && <Info label="Price" value={`Rs ${space.price}`} />}
-            {space.houseCost && <Info label="House cost" value={`Rs ${space.houseCost}`} />}
-            {space.mortgage && <Info label="Mortgage value" value={`Rs ${space.mortgage}`} />}
+            {space.price && <Info label="Price" value={`$${space.price}`} />}
+            {space.houseCost && <Info label="House cost" value={`$${space.houseCost}`} />}
+            {space.mortgage && <Info label="Mortgage value" value={`$${space.mortgage}`} />}
           </div>
 
           {canManage && myTurn && (
@@ -88,7 +88,7 @@ export default function PropertyModal({ game, spaceId, onClose }) {
             </div>
           )}
           {canManage && !myTurn && (
-            <p className="text-xs text-ink-700/60 pt-3 border-t border-ink-900/10">
+            <p className="text-xs text-ink-900/80 pt-3 border-t border-ink-900/10">
               You can manage this property on your turn.
             </p>
           )}
@@ -101,7 +101,7 @@ export default function PropertyModal({ game, spaceId, onClose }) {
 function Info({ label, value }) {
   return (
     <div className="bg-ink-900/5 rounded px-2 py-1">
-      <span className="text-ink-900/50">{label}: </span>
+      <span className="text-ink-900/75">{label}: </span>
       <span className="font-mono-num font-semibold">{value}</span>
     </div>
   );

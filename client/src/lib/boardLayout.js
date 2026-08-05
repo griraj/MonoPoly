@@ -17,16 +17,6 @@ export function gridPosition(id) {
   return { row: 1 + (id - 30), col: 11 };
 }
 
-// Returns which edge of the tile faces the board center — that's where
-// the classic Monopoly color band sits (top row -> bottom edge, bottom row -> top edge,
-// left col -> right edge, right col -> left edge).
-export function edgeForId(id) {
-  if (id <= 10) return 'top';
-  if (id <= 20) return 'right';
-  if (id <= 30) return 'bottom';
-  return 'left';
-}
-
 export const COLOR_HEX = {
   brown: 'var(--color-mono-brown)',
   lightblue: 'var(--color-mono-lightblue)',

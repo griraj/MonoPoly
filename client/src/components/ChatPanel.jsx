@@ -30,7 +30,7 @@ export default function ChatPanel({ game }) {
             key={t}
             onClick={() => setTab(t)}
             className={`flex-1 py-2 text-xs uppercase tracking-wider font-semibold transition ${
-              tab === t ? 'bg-felt-700 text-gold-400' : 'text-parchment-300/50 hover:text-parchment-200'
+              tab === t ? 'bg-felt-700 text-gold-400' : 'text-parchment-200/85 hover:text-parchment-200'
             }`}
           >
             {t === 'chat' ? 'Chat' : 'Game Log'}
@@ -39,7 +39,7 @@ export default function ChatPanel({ game }) {
       </div>
       <div ref={scrollRef} className="flex-1 overflow-y-auto scrollbar-thin px-3 py-2 space-y-1.5 min-h-0">
         {items.length === 0 && (
-          <p className="text-xs text-parchment-300/30 text-center mt-4">
+          <p className="text-xs text-parchment-200/75 text-center mt-4">
             {tab === 'chat' ? 'No messages yet.' : 'Game events will appear here.'}
           </p>
         )}
@@ -53,7 +53,7 @@ export default function ChatPanel({ game }) {
               </div>
             ))
           : items.map((l, i) => (
-              <div key={i} className="text-[11px] text-parchment-300/70 leading-relaxed">
+              <div key={i} className="text-[11px] text-parchment-100/95 leading-relaxed">
                 {l.message}
               </div>
             ))}

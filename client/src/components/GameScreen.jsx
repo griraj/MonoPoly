@@ -23,10 +23,10 @@ export default function GameScreen() {
       <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[260px_1fr_300px] gap-4">
         <div className="order-2 lg:order-1 space-y-3">
           <div className="flex items-center justify-between px-1">
-            <span className="text-xs uppercase tracking-widest text-gold-400/80">
+            <span className="text-xs uppercase tracking-widest text-gold-400">
               Lobby {game.code}
             </span>
-            <button onClick={leaveSession} className="text-xs text-parchment-300/40 hover:text-parchment-100">
+            <button onClick={leaveSession} className="text-xs text-parchment-200/80 hover:text-parchment-100">
               Leave
             </button>
           </div>
@@ -39,13 +39,13 @@ export default function GameScreen() {
             onSelectSpace={setSelectedSpace}
             centerContent={
               <>
-                <h1 className="font-display text-3xl sm:text-4xl font-bold text-gold-400/90 tracking-wide mb-4">
+                <h1 className="font-display text-3xl sm:text-4xl font-bold text-gold-400 tracking-wide mb-4">
                   MONOPOLY
                 </h1>
                 <DiceTray dice={game.lastDice} rollTrigger={rollTrigger} />
                 {game.freeParkingPot > 0 && (
-                  <div className="mt-3 text-xs text-parchment-300/60">
-                    Free Parking pot: <span className="text-gold-400 font-mono-num">Rs {game.freeParkingPot}</span>
+                  <div className="mt-3 text-xs text-parchment-100/90">
+                    Free Parking pot: <span className="text-gold-400 font-mono-num">${game.freeParkingPot}</span>
                   </div>
                 )}
               </>

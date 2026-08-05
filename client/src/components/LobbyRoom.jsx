@@ -57,7 +57,7 @@ export default function LobbyRoom() {
               {copied ? 'Copied!' : 'Copy invite'}
             </button>
           </div>
-          <p className="text-parchment-300/60 text-sm mt-2">
+          <p className="text-parchment-100/90 text-sm mt-2">
             {game.players.length} / 6 players &middot; waiting for host to start
           </p>
         </div>
@@ -89,7 +89,7 @@ export default function LobbyRoom() {
                 {p.id !== game.hostId && (
                   <span
                     className={`text-xs font-semibold px-2 py-0.5 rounded ${
-                      p.ready ? 'text-felt-950 bg-gold-500' : 'text-parchment-300/50 bg-felt-700'
+                      p.ready ? 'text-felt-950 bg-gold-500' : 'text-parchment-200/85 bg-felt-700'
                     }`}
                   >
                     {p.ready ? 'Ready' : 'Not ready'}
@@ -100,14 +100,14 @@ export default function LobbyRoom() {
                     <button
                       onClick={() => transferHost(p.id)}
                       title="Make host"
-                      className="text-xs text-parchment-300/50 hover:text-gold-400 transition"
+                      className="text-xs text-parchment-200/85 hover:text-gold-400 transition"
                     >
                       ⇧
                     </button>
                     <button
                       onClick={() => kick(p.id)}
                       title="Kick"
-                      className="text-xs text-parchment-300/50 hover:text-red-400 transition"
+                      className="text-xs text-parchment-200/85 hover:text-red-400 transition"
                     >
                       ✕
                     </button>

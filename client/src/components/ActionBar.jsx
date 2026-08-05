@@ -21,7 +21,7 @@ export default function ActionBar({ game, self, onOpenTrade, onRolled }) {
 
   if (!self || self.bankrupt) {
     return (
-      <div className="text-center text-parchment-300/50 text-sm py-3">
+      <div className="text-center text-parchment-200/85 text-sm py-3">
         {self?.bankrupt ? 'You are out of the game — spectating.' : ''}
       </div>
     );
@@ -30,7 +30,7 @@ export default function ActionBar({ game, self, onOpenTrade, onRolled }) {
   if (!myTurn) {
     const current = game.players[game.turnIndex];
     return (
-      <div className="text-center text-parchment-300/60 text-sm py-3">
+      <div className="text-center text-parchment-100/90 text-sm py-3">
         Waiting on <span className="text-gold-400 font-semibold">{current?.name}</span>…
       </div>
     );
@@ -43,7 +43,7 @@ export default function ActionBar({ game, self, onOpenTrade, onRolled }) {
       {game.turnPhase === 'roll' && self.inJail && (
         <>
           <ActionButton onClick={() => act('game:payJailFine')} disabled={busy || self.money < 50}>
-            Pay Rs 50 to leave Jail
+            Pay $50 to leave Jail
           </ActionButton>
           {self.getOutOfJailCards > 0 && (
             <ActionButton onClick={() => act('game:useJailCard')} disabled={busy}>
@@ -65,7 +65,7 @@ export default function ActionBar({ game, self, onOpenTrade, onRolled }) {
       {game.turnPhase === 'resolve' && space && (
         <>
           <span className="text-sm text-parchment-200 mr-1">
-            Buy <b>{space.name}</b> for <span className="text-gold-400 font-mono-num">Rs {space.price}</span>?
+            Buy <b>{space.name}</b> for <span className="text-gold-400 font-mono-num">${space.price}</span>?
           </span>
           <ActionButton
             primary

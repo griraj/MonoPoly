@@ -30,7 +30,7 @@ export default function PlayerDock({ game, selfId, onSelectPlayer }) {
                   </span>
                   {!p.connected && <span className="text-[9px] text-red-300/80">off</span>}
                 </div>
-                <div className="text-[10px] text-parchment-300/50 flex gap-1.5">
+                <div className="text-[10px] text-parchment-200/85 flex gap-1.5">
                   {p.inJail && <span className="text-amber-400/80">In jail</span>}
                   {p.bankrupt && <span>Bankrupt</span>}
                   {!p.bankrupt && <span>{p.properties.length} properties</span>}
@@ -39,7 +39,7 @@ export default function PlayerDock({ game, selfId, onSelectPlayer }) {
               </div>
             </div>
             <span className="font-mono-num text-sm font-bold text-gold-400 shrink-0 ml-2">
-              Rs {p.money.toLocaleString()}
+              ${p.money.toLocaleString()}
             </span>
           </button>
         );

@@ -33,12 +33,12 @@ export default function Home() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 text-gold-400 text-xs tracking-[0.3em] uppercase mb-2">
-            <span className="w-8 h-px bg-gold-600" /> Pakistan Edition <span className="w-8 h-px bg-gold-600" />
+            <span className="w-8 h-px bg-gold-600" /> Online Edition <span className="w-8 h-px bg-gold-600" />
           </div>
-          <h1 className="font-display text-6xl font-extrabold text-parchment-50 tracking-tight drop-shadow-[0_4px_0_rgba(0,0,0,0.25)]">
-            BUSINESS
+          <h1 className="font-display text-5xl font-semibold text-parchment-50 tracking-tight">
+            Monopoly
           </h1>
-          <p className="text-parchment-300/70 text-sm mt-2">Real-time multiplayer, 3–6 players. Trade, build &amp; win big!</p>
+          <p className="text-parchment-100/95 text-sm mt-2">Real-time multiplayer, 3–6 players.</p>
         </div>
 
         <div className="bg-felt-800/70 border border-gold-600/25 rounded-2xl p-6 shadow-2xl backdrop-blur-sm">
@@ -63,7 +63,7 @@ export default function Home() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs uppercase tracking-wider text-parchment-300/60 mb-1.5">
+              <label className="block text-xs uppercase tracking-wider text-parchment-100/90 mb-1.5">
                 Your name
               </label>
               <input
@@ -77,7 +77,7 @@ export default function Home() {
 
             {mode === 'join' && (
               <div>
-                <label className="block text-xs uppercase tracking-wider text-parchment-300/60 mb-1.5">
+                <label className="block text-xs uppercase tracking-wider text-parchment-100/90 mb-1.5">
                   Lobby code
                 </label>
                 <input

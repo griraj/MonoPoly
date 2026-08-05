@@ -73,7 +73,7 @@ export default function TradeModal({ game, self, onClose }) {
       >
         <div className="flex items-center justify-between px-5 py-4 border-b border-gold-600/20">
           <h2 className="font-display text-xl font-bold text-parchment-50">Trade</h2>
-          <button onClick={onClose} className="text-parchment-300/50 hover:text-parchment-100 text-lg">✕</button>
+          <button onClick={onClose} className="text-parchment-200/85 hover:text-parchment-100 text-lg">✕</button>
         </div>
 
         <div className="p-5 space-y-5">
@@ -98,7 +98,7 @@ export default function TradeModal({ game, self, onClose }) {
           )}
 
           <div>
-            <label className="block text-xs uppercase tracking-wider text-parchment-300/60 mb-1.5">
+            <label className="block text-xs uppercase tracking-wider text-parchment-100/90 mb-1.5">
               Trade with
             </label>
             <select
@@ -158,9 +158,9 @@ export default function TradeModal({ game, self, onClose }) {
 function TradeSide({ title, money, setMoney, jail, setJail, maxJail, properties, selected, onToggle, game }) {
   return (
     <div className="bg-felt-950/40 rounded-lg p-3 space-y-2">
-      <div className="text-xs uppercase tracking-wider text-parchment-300/60">{title}</div>
+      <div className="text-xs uppercase tracking-wider text-parchment-100/90">{title}</div>
       <div>
-        <label className="text-[11px] text-parchment-300/50">Cash</label>
+        <label className="text-[11px] text-parchment-200/85">Cash</label>
         <input
           type="number"
           min={0}
@@ -171,7 +171,7 @@ function TradeSide({ title, money, setMoney, jail, setJail, maxJail, properties,
       </div>
       {maxJail > 0 && (
         <div>
-          <label className="text-[11px] text-parchment-300/50">Get Out of Jail cards (max {maxJail})</label>
+          <label className="text-[11px] text-parchment-200/85">Get Out of Jail cards (max {maxJail})</label>
           <input
             type="number"
             min={0}
@@ -183,7 +183,7 @@ function TradeSide({ title, money, setMoney, jail, setJail, maxJail, properties,
         </div>
       )}
       <div className="max-h-40 overflow-y-auto scrollbar-thin space-y-1">
-        {properties.length === 0 && <p className="text-[11px] text-parchment-300/30">No properties</p>}
+        {properties.length === 0 && <p className="text-[11px] text-parchment-200/75">No properties</p>}
         {properties.map((sp) => (
           <label key={sp.id} className="flex items-center gap-1.5 text-[11px] text-parchment-200">
             <input
@@ -212,10 +212,10 @@ function TradeSummary({ game, trade }) {
   return (
     <div className="text-xs text-parchment-200 leading-relaxed">
       <span className="font-semibold text-gold-400">{from?.name}</span> offers{' '}
-      {o.fromMoney > 0 && `Rs ${o.fromMoney} `}
+      {o.fromMoney > 0 && `$${o.fromMoney} `}
       {o.fromProperties?.length > 0 && `${o.fromProperties.length} propert${o.fromProperties.length === 1 ? 'y' : 'ies'} `}
       to <span className="font-semibold text-gold-400">{to?.name}</span> for{' '}
-      {o.toMoney > 0 && `Rs ${o.toMoney} `}
+      {o.toMoney > 0 && `$${o.toMoney} `}
       {o.toProperties?.length > 0 && `${o.toProperties.length} propert${o.toProperties.length === 1 ? 'y' : 'ies'}`}
       {!o.fromMoney && !o.toMoney && !o.fromProperties?.length && !o.toProperties?.length && 'items'}
     </div>
