@@ -1,23 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: 'Fraunces', serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-display: 'Baloo 2', 'Fraunces', system-ui, sans-serif;
+  --font-body: 'Nunito', 'Inter', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
 
-  --color-felt-950: #0b2318;
-  --color-felt-900: #0f2e22;
-  --color-felt-800: #163b2b;
-  --color-felt-700: #1e4a36;
+  /* Classic Monopoly-style mint board + exact property colors */
+  --color-felt-950: #a9cdb0;
+  --color-felt-900: #c3ddc8;
+  --color-felt-800: #cde6d0;
+  --color-felt-700: #d8ecda;
 
-  --color-parchment-50: #fdfbf5;
-  --color-parchment-100: #f7f1de;
-  --color-parchment-200: #f1e6cc;
-  --color-parchment-300: #e6d5ac;
+  --color-parchment-50: #d8ecda;
+  --color-parchment-100: #cde6d0;
+  --color-parchment-200: #c3ddc8;
+  --color-parchment-300: #a9cdb0;
 
-  --color-gold-400: #e2bf5e;
-  --color-gold-500: #d4af37;
-  --color-gold-600: #b3901f;
+  --color-gold-400: #ffcc33;
+  --color-gold-500: #f2b90c;
+  --color-gold-600: #c99400;
 
   --color-ink-900: #1b1a17;
   --color-ink-700: #3a3630;
@@ -26,17 +27,17 @@
   --color-mono-lightblue: #aae0fa;
   --color-mono-pink: #d93a96;
   --color-mono-orange: #f7941d;
-  --color-mono-red: #ed1c24;
+  --color-mono-red: #ed1b24;
   --color-mono-yellow: #fef200;
   --color-mono-green: #1fb25a;
   --color-mono-darkblue: #0072bb;
 
-  --color-player-red: #e63946;
-  --color-player-blue: #3d6bff;
-  --color-player-green: #2a9d5c;
-  --color-player-yellow: #e9c536;
-  --color-player-purple: #8e5cd9;
-  --color-player-orange: #f4903a;
+  --color-player-red: #ed1b24;
+  --color-player-blue: #0072bb;
+  --color-player-green: #1fb25a;
+  --color-player-yellow: #fef200;
+  --color-player-purple: #954e9e;
+  --color-player-orange: #f7941d;
 }
 
 html, body, #root {
@@ -45,7 +46,7 @@ html, body, #root {
 
 body {
   font-family: var(--font-body);
-  background: var(--color-felt-950);
+  background: #0f2e1e;
   color: var(--color-parchment-100);
   -webkit-font-smoothing: antialiased;
 }
@@ -65,9 +66,17 @@ body {
 }
 
 .felt-texture {
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.03) 0, transparent 40%),
-    radial-gradient(circle at 80% 60%, rgba(255,255,255,0.025) 0, transparent 45%);
+  background-image: none;
+}
+
+.grass-board {
+  background-color: var(--color-felt-800);
+}
+
+.business-watermark {
+  font-family: var(--font-display);
+  color: rgba(0,0,0,0.85);
+  letter-spacing: 0.05em;
 }
 
 .scrollbar-thin {

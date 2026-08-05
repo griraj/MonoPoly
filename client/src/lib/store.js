@@ -94,5 +94,4 @@ socket.on('connect', () => useStore.setState({ connected: true, selfId: socket.i
 socket.on('disconnect', () => useStore.setState({ connected: false }));
 socket.on('game:state', (state) => useStore.setState({ game: state }));
 socket.on('game:error', (e) => useStore.getState().setError(e.message));
-socket.on('trade:accepted', (payload) => useStore.getState().setToast(payload.message));
 socket.on('chat:message', (msg) => useStore.setState((s) => ({ chat: [...s.chat, msg].slice(-200) })));

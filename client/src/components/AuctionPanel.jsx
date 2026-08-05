@@ -37,7 +37,7 @@ export default function AuctionPanel({ game, self }) {
         <h2 className="font-display text-2xl font-bold text-parchment-50 mb-3">{space.name}</h2>
 
         <div className="text-parchment-200 mb-1">
-          Current bid: <span className="font-mono-num text-gold-400 font-bold text-xl">${auction.currentBid}</span>
+          Current bid: <span className="font-mono-num text-gold-400 font-bold text-xl">Rs {auction.currentBid}</span>
         </div>
         {auction.currentBidder && (
           <div className="text-sm text-parchment-300/70 mb-4">

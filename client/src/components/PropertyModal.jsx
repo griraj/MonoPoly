@@ -56,7 +56,7 @@ export default function PropertyModal({ game, spaceId, onClose }) {
                     }`}
                   >
                     <td className="py-1">{RENT_LABELS[i]}</td>
-                    <td className="py-1 text-right font-mono-num">${r}</td>
+                    <td className="py-1 text-right font-mono-num">Rs {r}</td>
                   </tr>
                 ))}
               </tbody>
@@ -64,9 +64,9 @@ export default function PropertyModal({ game, spaceId, onClose }) {
           )}
 
           <div className="flex flex-wrap gap-2 text-xs text-ink-700 mb-4">
-            {space.price && <Info label="Price" value={`$${space.price}`} />}
-            {space.houseCost && <Info label="House cost" value={`$${space.houseCost}`} />}
-            {space.mortgage && <Info label="Mortgage value" value={`$${space.mortgage}`} />}
+            {space.price && <Info label="Price" value={`Rs ${space.price}`} />}
+            {space.houseCost && <Info label="House cost" value={`Rs ${space.houseCost}`} />}
+            {space.mortgage && <Info label="Mortgage value" value={`Rs ${space.mortgage}`} />}
           </div>
 
           {canManage && myTurn && (

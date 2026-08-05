@@ -1,6 +1,6 @@
 import { PLAYER_COLOR_HEX } from '../lib/boardLayout.js';
 
-export default function PlayerDock({ game, selfId, selectedPlayerId, onSelectPlayer }) {
+export default function PlayerDock({ game, selfId, onSelectPlayer }) {
   return (
     <div className="space-y-2">
       {game.players.map((p, idx) => {
@@ -15,15 +15,13 @@ export default function PlayerDock({ game, selfId, selectedPlayerId, onSelectPla
                 : isTurn
                 ? 'bg-felt-800 border-gold-500/60 animate-pulse-glow'
                 : 'bg-felt-800/60 border-gold-600/15'
-            } ${selectedPlayerId === p.id ? 'ring-2 ring-gold-400/40' : ''}`}
+            }`}
           >
             <div className="flex items-center gap-2.5 min-w-0">
               <span
-                className="flex items-center justify-center w-5 h-5 rounded-full ring-2 ring-white/10 text-xs font-medium shrink-0"
-                style={{ background: PLAYER_COLOR_HEX[p.color], color: '#111' }}
-              >
-                ♟
-              </span>
+                className="w-3 h-3 rounded-full ring-2 ring-white/10 shrink-0"
+                style={{ background: PLAYER_COLOR_HEX[p.color] }}
+              />
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
                   <span className="text-sm font-semibold text-parchment-100 truncate">
@@ -41,7 +39,7 @@ export default function PlayerDock({ game, selfId, selectedPlayerId, onSelectPla
               </div>
             </div>
             <span className="font-mono-num text-sm font-bold text-gold-400 shrink-0 ml-2">
-              ${p.money.toLocaleString()}
+              Rs {p.money.toLocaleString()}
             </span>
           </button>
         );

@@ -212,10 +212,10 @@ function TradeSummary({ game, trade }) {
   return (
     <div className="text-xs text-parchment-200 leading-relaxed">
       <span className="font-semibold text-gold-400">{from?.name}</span> offers{' '}
-      {o.fromMoney > 0 && `$${o.fromMoney} `}
+      {o.fromMoney > 0 && `Rs ${o.fromMoney} `}
       {o.fromProperties?.length > 0 && `${o.fromProperties.length} propert${o.fromProperties.length === 1 ? 'y' : 'ies'} `}
       to <span className="font-semibold text-gold-400">{to?.name}</span> for{' '}
-      {o.toMoney > 0 && `$${o.toMoney} `}
+      {o.toMoney > 0 && `Rs ${o.toMoney} `}
       {o.toProperties?.length > 0 && `${o.toProperties.length} propert${o.toProperties.length === 1 ? 'y' : 'ies'}`}
       {!o.fromMoney && !o.toMoney && !o.fromProperties?.length && !o.toProperties?.length && 'items'}
     </div>

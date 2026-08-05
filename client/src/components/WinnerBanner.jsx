@@ -17,7 +17,7 @@ export default function WinnerBanner({ game }) {
               <div key={p.id} className="flex justify-between text-sm text-parchment-200 px-2">
                 <span>{p.name}</span>
                 <span className="font-mono-num text-gold-400">
-                  ${p.money} · {p.properties.length} properties
+                  Rs {p.money} · {p.properties.length} properties
                 </span>
               </div>
             ))}

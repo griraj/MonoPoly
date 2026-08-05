@@ -136,7 +136,7 @@ export class Game {
           player.inJail = false;
           player.jailTurns = 0;
           player.money -= 50;
-          this.pushLog(`${player.name} failed to roll doubles 3 times, paid $50 and left jail.`);
+          this.pushLog(`${player.name} failed to roll doubles 3 times, paid Rs 50 and left jail.`);
           this.movePlayer(player, d1 + d2);
         } else {
           this.pushLog(`${player.name} rolled ${d1}+${d2} and stayed in jail.`);
@@ -170,7 +170,7 @@ export class Game {
     if (next < 0) next += 40;
     if (next < prev && spaces > 0) {
       player.money += GO_SALARY;
-      this.pushLog(`${player.name} passed GO and collected $200.`);
+      this.pushLog(`${player.name} passed GO and collected Rs 200.`);
     }
     player.position = next;
     this.resolveSpace(player);
@@ -208,7 +208,7 @@ export class Game {
       case 'tax':
         player.money -= space.amount;
         this.freeParkingPot += space.amount;
-        this.pushLog(`${player.name} paid $${space.amount} in tax.`);
+        this.pushLog(`${player.name} paid Rs ${space.amount} in tax.`);
         this.turnPhase = 'action';
         this.checkBankruptcy(player, null);
         break;
@@ -226,7 +226,7 @@ export class Game {
       case 'free_parking':
         if (this.settings.freeParkingBonus && this.freeParkingPot > 0) {
           player.money += this.freeParkingPot;
-          this.pushLog(`${player.name} collected $${this.freeParkingPot} from Free Parking!`);
+          this.pushLog(`${player.name} collected Rs ${this.freeParkingPot} from Free Parking!`);
           this.freeParkingPot = 0;
         }
         this.turnPhase = 'action';
@@ -319,7 +319,7 @@ export class Game {
           const rent = RAILROAD_RENTS[Math.min(count - 1, 3)] * 2;
           player.money -= rent;
           this.players.find((p) => p.id === propState.owner).money += rent;
-          this.pushLog(`${player.name} paid $${rent} rent (double railroad rent from Chance).`);
+          this.pushLog(`${player.name} paid Rs ${rent} rent (double railroad rent from Chance).`);
           this.checkBankruptcy(player, propState.owner);
         }
         return;
@@ -334,7 +334,7 @@ export class Game {
           const rent = roll * 10;
           player.money -= rent;
           this.players.find((p) => p.id === propState.owner).money += rent;
-          this.pushLog(`${player.name} paid $${rent} rent (10x dice roll from Chance).`);
+          this.pushLog(`${player.name} paid Rs ${rent} rent (10x dice roll from Chance).`);
           this.checkBankruptcy(player, propState.owner);
         }
         return;
@@ -365,7 +365,7 @@ export class Game {
     }
     player.money -= rent;
     owner.money += rent;
-    this.pushLog(`${player.name} paid $${rent} rent to ${owner.name}.`);
+    this.pushLog(`${player.name} paid Rs ${rent} rent to ${owner.name}.`);
     this.checkBankruptcy(player, owner.id);
   }
 
@@ -381,7 +381,7 @@ export class Game {
     propState.owner = player.id;
     player.properties.push(space.id);
     player.money -= space.price;
-    this.pushLog(`${player.name} bought ${space.name} for $${space.price}.`);
+    this.pushLog(`${player.name} bought ${space.name} for Rs ${space.price}.`);
     this.pendingSpace = null;
     this.turnPhase = 'action';
   }
@@ -415,7 +415,7 @@ export class Game {
     if (amount > player.money) throw new Error('Not enough money');
     auction.currentBid = amount;
     auction.currentBidder = playerId;
-    this.pushLog(`${player.name} bid $${amount} in the auction.`);
+    this.pushLog(`${player.name} bid Rs ${amount} in the auction.`);
     this.advanceAuction();
   }
 
@@ -462,7 +462,7 @@ export class Game {
     winner.money -= amount;
     winner.properties.push(space.id);
     this.properties[space.id].owner = winnerId;
-    this.pushLog(`${winner.name} won the auction for ${space.name} at $${amount}.`);
+    this.pushLog(`${winner.name} won the auction for ${space.name} at Rs ${amount}.`);
     this.endAuction();
   }
 
@@ -518,7 +518,7 @@ export class Game {
     const refund = Math.floor(space.houseCost / 2);
     player.money += refund;
     propState.houses -= 1;
-    this.pushLog(`${player.name} sold a house on ${space.name} for $${refund}.`);
+    this.pushLog(`${player.name} sold a house on ${space.name} for Rs ${refund}.`);
   }
 
   mortgageProperty(playerId, spaceId) {
@@ -530,7 +530,7 @@ export class Game {
     if (propState.mortgaged) throw new Error('Already mortgaged');
     propState.mortgaged = true;
     player.money += space.mortgage;
-    this.pushLog(`${player.name} mortgaged ${space.name} for $${space.mortgage}.`);
+    this.pushLog(`${player.name} mortgaged ${space.name} for Rs ${space.mortgage}.`);
   }
 
   unmortgageProperty(playerId, spaceId) {
@@ -543,7 +543,7 @@ export class Game {
     if (player.money < cost) throw new Error('Not enough money');
     player.money -= cost;
     propState.mortgaged = false;
-    this.pushLog(`${player.name} unmortgaged ${space.name} for $${cost}.`);
+    this.pushLog(`${player.name} unmortgaged ${space.name} for Rs ${cost}.`);
   }
 
   // ---------- Jail ----------
@@ -556,7 +556,7 @@ export class Game {
     player.money -= 50;
     player.inJail = false;
     player.jailTurns = 0;
-    this.pushLog(`${player.name} paid $50 to get out of jail.`);
+    this.pushLog(`${player.name} paid Rs 50 to get out of jail.`);
   }
 
   useJailCard(playerId) {
@@ -697,7 +697,7 @@ export class Game {
     if (!accept) {
       trade.status = 'rejected';
       this.pushLog(`${this.getPlayer(playerId).name} rejected the trade.`);
-      return { accepted: false, message: `${this.getPlayer(playerId).name} rejected the trade.` };
+      return;
     }
     const from = this.getPlayer(trade.fromId);
     const to = this.getPlayer(trade.toId);
@@ -728,9 +728,7 @@ export class Game {
     from.getOutOfJailCards += offer.toJailCards || 0;
 
     trade.status = 'accepted';
-    const message = `Trade between ${from.name} and ${to.name} was accepted.`;
-    this.pushLog(message);
-    return { accepted: true, message };
+    this.pushLog(`Trade between ${from.name} and ${to.name} was accepted.`);
   }
 
   cancelTrade(tradeId, playerId) {

@@ -43,7 +43,7 @@ export default function ActionBar({ game, self, onOpenTrade, onRolled }) {
       {game.turnPhase === 'roll' && self.inJail && (
         <>
           <ActionButton onClick={() => act('game:payJailFine')} disabled={busy || self.money < 50}>
-            Pay $50 to leave Jail
+            Pay Rs 50 to leave Jail
           </ActionButton>
           {self.getOutOfJailCards > 0 && (
             <ActionButton onClick={() => act('game:useJailCard')} disabled={busy}>
@@ -65,7 +65,7 @@ export default function ActionBar({ game, self, onOpenTrade, onRolled }) {
       {game.turnPhase === 'resolve' && space && (
         <>
           <span className="text-sm text-parchment-200 mr-1">
-            Buy <b>{space.name}</b> for <span className="text-gold-400 font-mono-num">${space.price}</span>?
+            Buy <b>{space.name}</b> for <span className="text-gold-400 font-mono-num">Rs {space.price}</span>?
           </span>
           <ActionButton
             primary

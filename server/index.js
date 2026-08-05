@@ -203,13 +203,7 @@ io.on('connection', (socket) => {
   socket.on('trade:respond', ({ tradeId, accept } = {}, cb) => {
     const game = lobbies.getGameForSocket(socket.id);
     if (!game) return;
-    wrap(socket, game, () => {
-      const result = game.respondTrade(tradeId, socket.id, accept);
-      if (result?.accepted) {
-        io.to(game.code).emit('trade:accepted', { message: result.message });
-      }
-      return result;
-    }, cb);
+    wrap(socket, game, () => game.respondTrade(tradeId, socket.id, accept), cb);
   });
 
   socket.on('trade:cancel', ({ tradeId } = {}, cb) => {

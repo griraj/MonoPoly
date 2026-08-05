@@ -6,21 +6,17 @@ import PlayerDock from './PlayerDock.jsx';
 import ActionBar from './ActionBar.jsx';
 import ChatPanel from './ChatPanel.jsx';
 import PropertyModal from './PropertyModal.jsx';
-import PlayerPropertiesModal from './PlayerPropertiesModal.jsx';
 import AuctionPanel from './AuctionPanel.jsx';
 import TradeModal from './TradeModal.jsx';
-import TradePopup from './TradePopup.jsx';
 import WinnerBanner from './WinnerBanner.jsx';
 
 export default function GameScreen() {
   const { game, session, self, leaveSession } = useStore();
   const [selectedSpace, setSelectedSpace] = useState(null);
-  const [selectedPlayerId, setSelectedPlayerId] = useState(null);
   const [tradeOpen, setTradeOpen] = useState(false);
   const [rollTrigger, setRollTrigger] = useState(0);
 
   const me = self();
-  const selectedPlayer = game.players.find((p) => p.id === selectedPlayerId) || null;
 
   return (
     <div className="min-h-screen p-3 sm:p-5">
@@ -34,19 +30,13 @@ export default function GameScreen() {
               Leave
             </button>
           </div>
-          <PlayerDock
-            game={game}
-            selfId={session.playerId}
-            selectedPlayerId={selectedPlayerId}
-            onSelectPlayer={setSelectedPlayerId}
-          />
+          <PlayerDock game={game} selfId={session.playerId} />
         </div>
 
         <div className="order-1 lg:order-2 flex flex-col gap-4">
           <Board
             game={game}
             onSelectSpace={setSelectedSpace}
-            onSelectPlayer={setSelectedPlayerId}
             centerContent={
               <>
                 <h1 className="font-display text-3xl sm:text-4xl font-bold text-gold-400/90 tracking-wide mb-4">
@@ -55,7 +45,7 @@ export default function GameScreen() {
                 <DiceTray dice={game.lastDice} rollTrigger={rollTrigger} />
                 {game.freeParkingPot > 0 && (
                   <div className="mt-3 text-xs text-parchment-300/60">
-                    Free Parking pot: <span className="text-gold-400 font-mono-num">${game.freeParkingPot}</span>
+                    Free Parking pot: <span className="text-gold-400 font-mono-num">Rs {game.freeParkingPot}</span>
                   </div>
                 )}
               </>
@@ -79,10 +69,6 @@ export default function GameScreen() {
       {selectedSpace !== null && game.board[selectedSpace].price && (
         <PropertyModal game={game} spaceId={selectedSpace} onClose={() => setSelectedSpace(null)} />
       )}
-      {selectedPlayer && (
-        <PlayerPropertiesModal game={game} player={selectedPlayer} onClose={() => setSelectedPlayerId(null)} />
-      )}
-      <TradePopup />
       {game.turnPhase === 'auction' && <AuctionPanel game={game} self={me} />}
       {tradeOpen && me && <TradeModal game={game} self={me} onClose={() => setTradeOpen(false)} />}
       {game.status === 'ended' && <WinnerBanner game={game} />}
