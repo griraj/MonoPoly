@@ -1,36 +1,104 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gridPosition } from '../lib/boardLayout.js';
 import Space from './Space.jsx';
 
 const GRID_LINES = 11;
+const STEP_MS = 160;
+
+function normalizePlayerPositions(players) {
+  return Object.fromEntries(players.map((player) => [player.id, player.position]));
+}
+
+function buildPositionMap(players, displayedPositions) {
+  const map = new Map();
+  players.forEach((player) => {
+    const position = displayedPositions[player.id] ?? player.position;
+    const list = map.get(position) || [];
+    list.push(player);
+    map.set(position, list);
+  });
+  return map;
+}
+
+function buildPath(start, end) {
+  const path = [start];
+  let current = start;
+  while (current !== end) {
+    current = (current + 1) % 40;
+    path.push(current);
+    if (path.length > 40) break;
+  }
+  return path;
+}
 
 export default function Board({ game, onSelectSpace, centerContent }) {
- const corners = new Set([0, 10, 20, 30]);
- const wrapperRef = useRef(null);
- const [boardSize, setBoardSize] = useState(0);
+  const corners = new Set([0, 10, 20, 30]);
+  const wrapperRef = useRef(null);
+  const [boardSize, setBoardSize] = useState(0);
+  const [displayedPositions, setDisplayedPositions] = useState(() => normalizePlayerPositions(game.players));
+  const displayedPositionsRef = useRef(displayedPositions);
+  const animationTimersRef = useRef(new Map());
 
- // Snap the board size to an exact layout with 11 equal tracks. This keeps each
- // space the same whole-pixel width and height, and avoids any visible gaps
- // or grid lines between the tiles.
- useLayoutEffect(() => {
-   const wrapper = wrapperRef.current;
-   if (!wrapper) return;
+  useLayoutEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
 
-   const updateSize = () => {
-     const { width, height } = wrapper.getBoundingClientRect();
-     const available = Math.floor(Math.min(width, height));
-     const cell = Math.floor(available / GRID_LINES);
-     const snapped = cell * GRID_LINES;
-     setBoardSize(snapped > 0 ? snapped : available);
-   };
+    const updateSize = () => {
+      const { width, height } = wrapper.getBoundingClientRect();
+      const available = Math.floor(Math.min(width, height));
+      const cell = Math.floor(available / GRID_LINES);
+      const snapped = cell * GRID_LINES;
+      setBoardSize(snapped > 0 ? snapped : available);
+    };
 
-   updateSize();
-   const observer = new ResizeObserver(updateSize);
-   observer.observe(wrapper);
-   return () => observer.disconnect();
- }, []);
+    updateSize();
+    const observer = new ResizeObserver(updateSize);
+    observer.observe(wrapper);
+    return () => observer.disconnect();
+  }, []);
 
- const cell = boardSize ? boardSize / GRID_LINES : null;
+  useEffect(() => {
+    displayedPositionsRef.current = displayedPositions;
+  }, [displayedPositions]);
+
+  useEffect(() => {
+    const previous = displayedPositionsRef.current;
+    const current = normalizePlayerPositions(game.players);
+
+    const nextDisplayed = { ...previous };
+    game.players.forEach((player) => {
+      if (previous[player.id] === undefined) {
+        nextDisplayed[player.id] = player.position;
+      }
+    });
+    setDisplayedPositions(nextDisplayed);
+
+    game.players.forEach((player) => {
+      const from = previous[player.id];
+      const to = player.position;
+      if (from !== undefined && from !== to) {
+        const timers = animationTimersRef.current.get(player.id);
+        if (timers) timers.forEach(clearTimeout);
+
+        const path = buildPath(from, to);
+        path.slice(1).forEach((position, idx) => {
+          const timer = window.setTimeout(() => {
+            setDisplayedPositions((prev) => ({ ...prev, [player.id]: position }));
+          }, STEP_MS * (idx + 1));
+          const existing = animationTimersRef.current.get(player.id) || [];
+          animationTimersRef.current.set(player.id, [...existing, timer]);
+        });
+      }
+    });
+
+    return () => {
+      animationTimersRef.current.forEach((timers) => timers.forEach(clearTimeout));
+      animationTimersRef.current.clear();
+    };
+  }, [game.players]);
+
+  const cell = boardSize ? boardSize / GRID_LINES : null;
+  const playersBySpace = buildPositionMap(game.players, displayedPositions);
 
   return (
     <div ref={wrapperRef} className="w-full aspect-square flex items-center justify-center">
@@ -52,6 +120,7 @@ export default function Board({ game, onSelectSpace, centerContent }) {
                 space={space}
                 propState={game.properties[space.id]}
                 players={game.players}
+                displayedPlayers={playersBySpace.get(space.id) || []}
                 isCorner={corners.has(space.id)}
                 onClick={() => onSelectSpace(space.id)}
               />
@@ -64,6 +133,7 @@ export default function Board({ game, onSelectSpace, centerContent }) {
         >
           {centerContent}
         </div>
-      </div>    </div>
+      </div>
+    </div>
   );
 }

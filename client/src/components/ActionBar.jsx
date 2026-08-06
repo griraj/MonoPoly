@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { emitAck } from '../lib/socket.js';
 import { useStore } from '../lib/store.js';
 
 export default function ActionBar({ game, self, onOpenTrade, onRolled }) {
   const { setError } = useStore();
   const [busy, setBusy] = useState(false);
+  const [turnSeconds, setTurnSeconds] = useState(20);
   const myTurn = game.status === 'playing' && game.players[game.turnIndex]?.id === self?.id;
+  const currentPlayer = game.players[game.turnIndex];
 
   async function act(event, payload) {
     setBusy(true);
@@ -19,6 +21,20 @@ export default function ActionBar({ game, self, onOpenTrade, onRolled }) {
     }
   }
 
+  useEffect(() => {
+    if (game.status !== 'playing' || !currentPlayer) {
+      setTurnSeconds(20);
+      return undefined;
+    }
+
+    setTurnSeconds(20);
+    const interval = window.setInterval(() => {
+      setTurnSeconds((seconds) => Math.max(seconds - 1, 0));
+    }, 1000);
+
+    return () => window.clearInterval(interval);
+  }, [game.status, game.turnIndex, currentPlayer?.id]);
+
   if (!self || self.bankrupt) {
     return (
       <div className="text-center text-parchment-200/85 text-sm py-3">
@@ -29,17 +45,31 @@ export default function ActionBar({ game, self, onOpenTrade, onRolled }) {
 
   if (!myTurn) {
     const current = game.players[game.turnIndex];
+    const timerLabel = game.status === 'playing' ? `${current?.name || 'Player'}'s turn · ${turnSeconds}s left` : null;
     return (
-      <div className="text-center text-parchment-100/90 text-sm py-3">
-        Waiting on <span className="text-gold-400 font-semibold">{current?.name}</span>…
+      <div className="w-full text-center text-sm py-3">
+        <div className="text-parchment-100/90">
+          Waiting on <span className="text-gold-400 font-semibold">{current?.name}</span>…
+        </div>
+        {timerLabel && (
+          <div className="mt-1 text-[0.72rem] uppercase tracking-[0.25em] text-parchment-300/90">
+            {timerLabel}
+          </div>
+        )}
       </div>
     );
   }
 
   const space = game.pendingSpace !== null ? game.board[game.pendingSpace] : null;
+  const timerLabel = game.status === 'playing' ? `${game.players[game.turnIndex]?.name || 'Player'}'s turn · ${turnSeconds}s left` : null;
 
   return (
     <div className="flex flex-wrap items-center gap-2 justify-center">
+      {timerLabel && (
+        <div className="w-full text-center text-[0.72rem] uppercase tracking-[0.25em] text-parchment-300/90">
+          {timerLabel}
+        </div>
+      )}
       {game.turnPhase === 'roll' && self.inJail && (
         <>
           <ActionButton onClick={() => act('game:payJailFine')} disabled={busy || self.money < 50}>

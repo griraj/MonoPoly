@@ -10,9 +10,9 @@ const ICONS = {
   go: '➡️',
 };
 
-export default function Space({ space, propState, players, onClick, isCorner }) {
+export default function Space({ space, propState, players, displayedPlayers = [], onClick, isCorner }) {
   const owner = propState?.owner ? players.find((p) => p.id === propState.owner) : null;
-  const occupants = players.filter((p) => !p.bankrupt && p.position === space.id);
+  const occupants = displayedPlayers.filter((p) => !p.bankrupt);
   const isProperty = space.type === 'property';
   const isRailUtil = space.type === 'railroad' || space.type === 'utility';
 
@@ -25,7 +25,20 @@ export default function Space({ space, propState, players, onClick, isCorner }) 
       style={{ minWidth: 0, minHeight: 0 }}
     >
       {isProperty && (
-        <div className="h-[22%] w-full shrink-0" style={{ background: COLOR_HEX[space.color] }} />
+        <div className="relative h-[22%] w-full shrink-0" style={{ background: COLOR_HEX[space.color] }}>
+          {owner && (
+            <span
+                className="absolute bottom-1 right-1 block rounded-full"
+              style={{
+                  width: '65%',
+                  height: '0.35rem',
+                background: PLAYER_COLOR_HEX[owner.color],
+                boxShadow: '0 0 0 1px rgba(255,255,255,0.6)',
+              }}
+              title={owner.name}
+            />
+          )}
+        </div>
       )}
       {propState?.mortgaged && (
         <div className="absolute top-0 left-0 right-0 h-[22%] bg-black/50 flex items-center justify-center">
@@ -64,22 +77,18 @@ export default function Space({ space, propState, players, onClick, isCorner }) 
         </div>
       )}
 
-      {owner && (
-        <div
-          className="absolute bottom-0.5 right-0.5 w-2 h-2 rounded-full ring-1 ring-white/40"
-          style={{ background: PLAYER_COLOR_HEX[owner.color] }}
-        />
-      )}
 
       {occupants.length > 0 && (
-        <div className="absolute bottom-0.5 left-0.5 flex -space-x-1">
+        <div className="absolute bottom-1 left-1 flex items-center gap-1">
           {occupants.map((p) => (
             <span
               key={p.id}
-              className="w-2.5 h-2.5 rounded-full ring-1 ring-white/60 shadow"
-              style={{ background: PLAYER_COLOR_HEX[p.color] }}
+              className="text-[14px] leading-none rounded-md px-1 py-0.5 ring-1 ring-white/60 shadow-sm"
+              style={{ color: PLAYER_COLOR_HEX[p.color], backgroundColor: 'rgba(255,255,255,0.12)' }}
               title={p.name}
-            />
+            >
+              ♟
+            </span>
           ))}
         </div>
       )}
