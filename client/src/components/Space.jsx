@@ -19,7 +19,7 @@ export default function Space({ space, propState, players, onClick, isCorner }) 
   return (
     <button
       onClick={onClick}
-      className={`relative flex flex-col bg-parchment-100 border border-ink-900/20 overflow-hidden text-left hover:brightness-105 transition ${
+      className={`relative flex h-full w-full flex-col bg-parchment-100 overflow-hidden text-left hover:brightness-105 transition ${
         isCorner ? 'items-center justify-center text-center p-1' : 'p-1'
       }`}
       style={{ minWidth: 0, minHeight: 0 }}
